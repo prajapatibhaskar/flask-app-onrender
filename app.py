@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import pickle
+from flask_cors import CORS  # Import CORS
 from tensorflow.keras.models import load_model
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the model and tokenizer
 with open('resources/tfidf_tokenizer.pkl', 'rb') as f:
@@ -22,3 +24,6 @@ def predict():
     predicted_label = int(predictions[0][0])
     
     return jsonify({'predicted_label': predicted_label})
+    
+if __name__ == '__main__':
+    app.run(debug=True)
